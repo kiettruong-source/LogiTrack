@@ -1,16 +1,11 @@
-# This is a sample Python script.
+from fastapi import FastAPI
+from auth.router import router as auth_router
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+app = FastAPI(title="Identity Service API", description="Core Identity Service for Authentication")
 
+# Include the authentication router
+app.include_router(auth_router, prefix="/api/v1/auth", tags=["Authentication"])
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Identity Service API"}
